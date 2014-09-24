@@ -1,5 +1,8 @@
+#Eclipse
 .classpath
 .project
 .settings
-core/target
 
+#Maven
+core/target
+test/target
