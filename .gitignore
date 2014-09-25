@@ -6,3 +6,4 @@
 #Maven
 core/target
 test/target
+entity/target
