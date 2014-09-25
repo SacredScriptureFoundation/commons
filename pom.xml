@@ -52,6 +52,7 @@
     <module>test</module>
     <module>entity</module>
     <module>web</module>
+    <module>locale</module>
   </modules>
 
   <dependencyManagement>

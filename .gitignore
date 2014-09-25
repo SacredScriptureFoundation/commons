@@ -5,6 +5,7 @@
 
 #Maven
 core/target
-test/target
 entity/target
+locale/target
+test/target
 web/target
