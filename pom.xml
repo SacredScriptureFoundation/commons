@@ -51,6 +51,7 @@
     <module>core</module>
     <module>test</module>
     <module>entity</module>
+    <module>web</module>
   </modules>
 
   <dependencyManagement>
