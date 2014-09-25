@@ -25,7 +25,7 @@ package org.sacredscripturefoundation.commons.entity;
  * @author Paul Benedict
  * @since 1.0
  */
-public class MockEntity extends AbstractEntity<Long> {
+public class MockEntity extends EntityImpl<Long> {
 
     public MockEntity() {
         // do nothing

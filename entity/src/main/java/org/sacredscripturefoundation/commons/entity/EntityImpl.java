@@ -45,9 +45,7 @@ import javax.persistence.TemporalType;
  */
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public abstract class AbstractEntity<ID> extends AbstractModel implements Entity<ID>, AssignableNativeId<ID> {
-
-    private static final long serialVersionUID = 1L;
+public abstract class EntityImpl<ID> extends AbstractModel implements Entity<ID>, AssignableNativeId<ID> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,7 +62,7 @@ public abstract class AbstractEntity<ID> extends AbstractModel implements Entity
     /**
      * Constructs a new entity without an identifier.
      */
-    public AbstractEntity() {
+    public EntityImpl() {
         // empty
     }
 
@@ -74,7 +72,7 @@ public abstract class AbstractEntity<ID> extends AbstractModel implements Entity
      * @param id the identifier
      * @throws NullPointerException if id is {@code null}
      */
-    public AbstractEntity(ID id) {
+    public EntityImpl(ID id) {
         Objects.requireNonNull(id);
         setId(id);
     }

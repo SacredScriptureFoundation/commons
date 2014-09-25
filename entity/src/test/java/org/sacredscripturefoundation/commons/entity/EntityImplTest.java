@@ -29,21 +29,21 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit tests for {@link AbstractEntity}.
+ * Unit tests for {@link EntityImpl}.
  *
  * @author Paul Benedict
  * @since 1.0
  */
-public class AbstractEntityTest {
+public class EntityImplTest {
 
-    private AbstractEntity<Object> entity;
+    private EntityImpl<Object> entity;
 
     /**
      * Constructs an anonymous subclass with no arguments.
      */
     @Before
     public void setUp() {
-        entity = new AbstractEntity<Object>() {
+        entity = new EntityImpl<Object>() {
             // empty
         };
     }
@@ -54,7 +54,7 @@ public class AbstractEntityTest {
     @Test(expected = NullPointerException.class)
     @SuppressWarnings("serial")
     public void testConstructorNullId() {
-        entity = new AbstractEntity<Object>(null) {
+        entity = new EntityImpl<Object>(null) {
             // empty
         };
     }
