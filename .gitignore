@@ -4,6 +4,7 @@
 .settings
 
 #Maven
+target
 core/target
 entity/target
 locale/target
