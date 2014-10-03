@@ -108,5 +108,50 @@
       <artifactId>easymock</artifactId>
     </dependency>
   </dependencies>
+  
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <configuration>
+            <links>
+              <link>http://docs.oracle.com/javase/7/docs/api/</link>
+              <link>http://docs.oracle.com/javaee/7/api/</link>
+              <link>http://docs.spring.io/spring/docs/3.2.x/javadoc-api/</link>
+              <link>http://www.eclipse.org/eclipselink/api/2.5/</link>
+            </links>
+          </configuration>
+        </plugin>
+      </plugins> 
+    </pluginManagement>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.10.1</version>
+        <configuration>
+          <groups>
+            <group>
+              <title>General</title>
+              <packages>org.sacredscripturefoundation.commons:org.sacredscripturefoundation.commons.test*:org.sacredscripturefoundation.commons.web*</packages>
+            </group>
+            <group>
+              <title>Entity Persistence</title>
+              <packages>org.sacredscripturefoundation.commons.entity*</packages>
+            </group>
+            <group>
+              <title>Locale Assistance</title>
+              <packages>org.sacredscripturefoundation.commons.locale*</packages>
+            </group>
+          </groups>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
 
 </project>
