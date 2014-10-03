@@ -47,6 +47,13 @@
     </license>
   </licenses>
 
+  <scm>
+    <url>https://github.com/SacredScriptureFoundation/commons/tree/${project.scm.tag}</url>
+    <connection>scm:git:git://github.com/SacredScriptureFoundation/commons.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/SacredScriptureFoundation/commons.git</developerConnection>
+    <tag>master</tag>
+  </scm>
+
   <modules>
     <module>core</module>
     <module>test</module>
