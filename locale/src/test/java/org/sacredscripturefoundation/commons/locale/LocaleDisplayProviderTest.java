@@ -24,9 +24,6 @@ import static java.util.Locale.ITALIAN;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import org.sacredscripturefoundation.commons.locale.LocaleDisplay;
-import org.sacredscripturefoundation.commons.locale.LocaleDisplayProvider;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -65,7 +62,7 @@ public class LocaleDisplayProviderTest {
      */
     @Test
     public void testGetLanguage() {
-        assertEquals("Inglés", provider.getLanguage("en", new Locale("es")));
+        assertEquals("InglÃ©s", provider.getLanguage("en", new Locale("es")));
     }
 
     /**

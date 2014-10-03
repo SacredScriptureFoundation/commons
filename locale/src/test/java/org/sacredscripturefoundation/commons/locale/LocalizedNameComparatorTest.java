@@ -22,10 +22,6 @@ package org.sacredscripturefoundation.commons.locale;
 import static org.junit.Assert.assertTrue;
 
 import org.sacredscripturefoundation.commons.Named;
-import org.sacredscripturefoundation.commons.locale.LocaleContextHolder;
-import org.sacredscripturefoundation.commons.locale.LocaleDisplayProvider;
-import org.sacredscripturefoundation.commons.locale.LocaleProvider;
-import org.sacredscripturefoundation.commons.locale.LocalizedNameComparator;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -77,7 +73,7 @@ public class LocalizedNameComparatorTest {
         comparator = new LocalizedNameComparator<MockLocalizedNamed>(displayProvider);
 
         MockLocalizedNamed[] entities = new MockLocalizedNamed[5];
-        entities[0] = new MockLocalizedNamed(new Locale("en"), "Edición Estándar Revisada - Versión Católica");
+        entities[0] = new MockLocalizedNamed(new Locale("en"), "EdiciÃ³n EstÃ¡ndar Revisada - VersiÃ³n CatÃ³lica");
         entities[1] = new MockLocalizedNamed(new Locale("iw"), "El Texto Masoretic");
         entities[2] = new MockLocalizedNamed(new Locale("la"), "Nova Vulgata");
         entities[3] = new MockLocalizedNamed(new Locale("en"), "Version del Rey Jaime");
