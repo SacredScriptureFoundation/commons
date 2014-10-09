@@ -60,10 +60,37 @@
     <module>entity</module>
     <module>web</module>
     <module>locale</module>
+    <module>bom</module>
   </modules>
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>ssf-commons-core</artifactId>
+        <version>${project.version}</version>  
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>ssf-commons-entity</artifactId>
+        <version>${project.version}</version>  
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>ssf-commons-locale</artifactId>
+        <version>${project.version}</version>  
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>ssf-commons-test</artifactId>
+        <version>${project.version}</version>
+        <scope>test</scope>  
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>ssf-commons-web</artifactId>
+        <version>${project.version}</version>  
+      </dependency>
       <dependency>
         <groupId>javax</groupId>
         <artifactId>javaee-api</artifactId>
