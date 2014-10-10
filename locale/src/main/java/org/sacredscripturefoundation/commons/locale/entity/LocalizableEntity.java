@@ -41,39 +41,25 @@ import javax.persistence.MappedSuperclass;
  * @since 1.0
  */
 @MappedSuperclass
-public abstract class LocalizableEntity<ID, X extends TranslationEntity<ID>> extends EntityImpl<ID> {
+public abstract class LocalizableEntity<ID, X extends TranslationEntity<ID>> extends EntityImpl<ID> implements
+        LocalizableContainer<X> {
 
     private static final String MSG_XLAT_NULL = "Translation is required";
     private static final String MSG_XLAT_LOCALE_NULL = "Translation's locale is required";
     private static final String MSG_USER_LOCALE_NULL = "User locale is required";
 
-    /**
-     * Adds the specified localization to this entity.
-     *
-     * @param xlat the translation to add
-     * @throws NullPointerException if either the translation or its locale are
-     * {@code null}
-     */
-    public final void addLocalization(X xlat) {
+    @Override
+    public final void addTranslation(X xlat) {
         Objects.requireNonNull(xlat, MSG_XLAT_NULL);
         Objects.requireNonNull(xlat.getLocale(), MSG_XLAT_LOCALE_NULL);
         getTranslations().put(xlat.getLocale(), xlat);
     }
 
     /**
-     * Retrieves the mapping of translations of this entity. The translations
-     * are keyed by locale.
-     *
-     * @return the map (never {@code null})
-     * @see #setTranslations(Map)
-     */
-    public abstract Map<Locale, X> getTranslations();
-
-    /**
-     * Determines and retrieves the translation based on the user's current
-     * locale. If the translation is absent, the translation of the fallback
-     * locale is attempted. If that translation is absent, {@code null} is
-     * returned.
+     * Determines and retrieves the localized translation based on the user's
+     * current locale. If the translation is absent, the translation of the
+     * fallback locale is attempted. If that translation is absent, {@code null}
+     * is returned.
      *
      * @return the translation or {@code null}
      */
@@ -97,7 +83,7 @@ public abstract class LocalizableEntity<ID, X extends TranslationEntity<ID>> ext
     }
 
     /**
-     * Stores the new translations for this localizable entity.
+     * Stores the new localized translations for this localizable entity.
      *
      * @param translations the map of translations
      * @see #getTranslations()

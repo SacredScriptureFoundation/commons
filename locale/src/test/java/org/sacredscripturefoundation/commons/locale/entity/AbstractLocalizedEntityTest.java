@@ -52,18 +52,18 @@ public class AbstractLocalizedEntityTest {
      * Verifies adding a translation.
      */
     @Test
-    public void testAddLocalization() {
-        MockTranslation loc = new MockTranslation(Locale.ENGLISH);
-        entity.addLocalization(loc);
-        assertEquals(loc, entity.getTranslations().get(Locale.ENGLISH));
+    public void testAddTranslation() {
+        MockTranslation xlat = new MockTranslation(Locale.ENGLISH);
+        entity.addTranslation(xlat);
+        assertEquals(xlat, entity.getTranslations().get(Locale.ENGLISH));
     }
 
     /**
      * Verifies the error to add a {@code null} translation.
      */
     @Test(expected = NullPointerException.class)
-    public void testAddLocalizationNull() {
-        entity.addLocalization(null);
+    public void testAddTranslationNull() {
+        entity.addTranslation(null);
     }
 
     /**
@@ -71,10 +71,10 @@ public class AbstractLocalizedEntityTest {
      * locale.
      */
     @Test(expected = NullPointerException.class)
-    public void testAddLocalizationWithNullLocale() {
-        MockTranslation loc = new MockTranslation();
-        loc.setLocale(null);
-        entity.addLocalization(loc);
+    public void testAddTranslationWithNullLocale() {
+        MockTranslation xlat = new MockTranslation();
+        xlat.setLocale(null);
+        entity.addTranslation(xlat);
     }
 
     /**
@@ -82,10 +82,10 @@ public class AbstractLocalizedEntityTest {
      */
     @Test
     public void testLocalize() {
-        MockTranslation loc = new MockTranslation(Locale.ENGLISH);
-        entity.addLocalization(loc);
+        MockTranslation xlat = new MockTranslation(Locale.ENGLISH);
+        entity.addTranslation(xlat);
         LocaleContextHolder.setLocale(Locale.ENGLISH);
-        assertSame(loc, entity.localize(null));
+        assertSame(xlat, entity.localize(null));
     }
 
     /**
@@ -104,8 +104,8 @@ public class AbstractLocalizedEntityTest {
     @Test
     public void testLocalizeWhenUserLocaleMismatches() {
         LocaleContextHolder.setLocale(Locale.ENGLISH);
-        MockTranslation loc = new MockTranslation(Locale.FRENCH);
-        entity.addLocalization(loc);
+        MockTranslation xlat = new MockTranslation(Locale.FRENCH);
+        entity.addTranslation(xlat);
         assertNull(entity.localize(null));
     }
 
@@ -116,9 +116,9 @@ public class AbstractLocalizedEntityTest {
     @Test
     public void testLocalizeWhenUserLocaleMismatchesWithFallback() {
         LocaleContextHolder.setLocale(Locale.ENGLISH);
-        MockTranslation loc = new MockTranslation(Locale.FRENCH);
-        entity.addLocalization(loc);
-        assertSame(loc, entity.localize(Locale.FRENCH));
+        MockTranslation xlat = new MockTranslation(Locale.FRENCH);
+        entity.addTranslation(xlat);
+        assertSame(xlat, entity.localize(Locale.FRENCH));
     }
 
     /**
@@ -128,8 +128,8 @@ public class AbstractLocalizedEntityTest {
     @Test
     public void testLocalizeWhenUserLocaleMismatchesWithFallbackFailure() {
         LocaleContextHolder.setLocale(Locale.ENGLISH);
-        MockTranslation loc = new MockTranslation(Locale.FRENCH);
-        entity.addLocalization(loc);
+        MockTranslation xlat = new MockTranslation(Locale.FRENCH);
+        entity.addTranslation(xlat);
         assertNull(entity.localize(Locale.GERMAN));
     }
 
@@ -137,7 +137,7 @@ public class AbstractLocalizedEntityTest {
      * Verifies mutating the translations reference.
      */
     @Test
-    public void testSetLocalizations() {
+    public void testSetTranslations() {
         Map<Locale, MockTranslation> map = new HashMap<>();
         entity.setTranslations(map);
         assertSame(map, entity.getTranslations());
