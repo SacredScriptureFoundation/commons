@@ -19,44 +19,29 @@
  */
 package org.sacredscripturefoundation.commons.locale.entity;
 
-import org.sacredscripturefoundation.commons.Named;
-
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 /**
- * This class is the mock implementation of {@link LocalizableEntity}.
+ * This class is the mock implementation of {@link LocalizedContentEntityTest}.
  *
  * @author Paul Benedict
- * @see MockTranslation
+ * @see MockLocalizableEntity
  * @since 1.0
  */
-public class MockLocalizedEntity extends LocalizableEntity<Long, MockTranslation> implements Named {
+public class MockLocalizedContentEntity extends LocalizedContentEntity<Long> {
 
-    private String name;
-    private Map<Locale, MockTranslation> translations;
-
-    @Override
-    public String getName() {
-        return name;
+    /**
+     * Constructs a new mock translation.
+     */
+    public MockLocalizedContentEntity() {
+        // nothing
     }
 
-    @Override
-    public Map<Locale, MockTranslation> getTranslations() {
-        if (translations == null) {
-            translations = new HashMap<>();
-        }
-        return translations;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public void setTranslations(Map<Locale, MockTranslation> translations) {
-        this.translations = translations;
+    /**
+     * Constructs a new mock translation for the specified locale.
+     */
+    public MockLocalizedContentEntity(Locale locale) {
+        setLocale(locale);
     }
 
 }

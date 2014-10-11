@@ -19,29 +19,39 @@
  */
 package org.sacredscripturefoundation.commons.locale.entity;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import java.util.Locale;
 
+import org.junit.Before;
+import org.junit.Test;
+
 /**
- * This class is the mock implementation of {@link TranslationEntity}.
+ * Unit tests for {@link LocalizedContentEntityTest}.
  *
  * @author Paul Benedict
- * @see MockLocalizedEntity
  * @since 1.0
  */
-public class MockTranslation extends TranslationEntity<Long> {
+public class LocalizedContentEntityTest {
 
-    /**
-     * Constructs a new mock translation.
-     */
-    public MockTranslation() {
-        // nothing
+    private LocalizedContentEntity<?> x;
+
+    @Before
+    @SuppressWarnings("serial")
+    public void onSetUp() throws Exception {
+        x = new MockLocalizedContentEntity();
     }
 
     /**
-     * Constructs a new mock translation for the specified locale.
+     * Tests the {@code locale} property.
      */
-    public MockTranslation(Locale locale) {
-        setLocale(locale);
+    @Test
+    public void testLocale() {
+        x.setLocale(Locale.ENGLISH);
+        assertEquals(Locale.ENGLISH, x.getLocale());
+        x.setLocale(null);
+        assertNull(x.getLocale());
     }
 
 }

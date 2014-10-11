@@ -19,39 +19,44 @@
  */
 package org.sacredscripturefoundation.commons.locale.entity;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import org.sacredscripturefoundation.commons.Named;
 
+import java.util.HashMap;
 import java.util.Locale;
-
-import org.junit.Before;
-import org.junit.Test;
+import java.util.Map;
 
 /**
- * Unit tests for {@link TranslationEntity}.
+ * This class is the mock implementation of {@link LocalizableEntity}.
  *
  * @author Paul Benedict
+ * @see MockLocalizedContentEntity
  * @since 1.0
  */
-public class TranslationEntityTest {
+public class MockLocalizableEntity extends LocalizableEntity<Long, MockLocalizedContentEntity> implements Named {
 
-    private TranslationEntity<?> x;
+    private String name;
+    private Map<Locale, MockLocalizedContentEntity> localizedContent;
 
-    @Before
-    @SuppressWarnings("serial")
-    public void onSetUp() throws Exception {
-        x = new MockTranslation();
+    @Override
+    public Map<Locale, MockLocalizedContentEntity> getLocalizedContent() {
+        if (localizedContent == null) {
+            localizedContent = new HashMap<>();
+        }
+        return localizedContent;
     }
 
-    /**
-     * Tests the {@code locale} property.
-     */
-    @Test
-    public void testLocale() {
-        x.setLocale(Locale.ENGLISH);
-        assertEquals(Locale.ENGLISH, x.getLocale());
-        x.setLocale(null);
-        assertNull(x.getLocale());
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setLocalizedContent(Map<Locale, MockLocalizedContentEntity> localizedContent) {
+        this.localizedContent = localizedContent;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

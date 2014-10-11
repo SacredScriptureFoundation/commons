@@ -25,32 +25,32 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * This interface defines a container that can translated content for individual
- * locales.
+ * This interface defines a container that manages translated content for
+ * individual locales.
  *
  * @author Paul Benedict
  * @since 1.0
- * @param <X> the translated content type
+ * @param <L> the localized content type
  */
-public interface LocalizableContainer<X extends LocaleProvider> {
+public interface LocalizableContainer<L extends LocaleProvider> {
 
     /**
-     * Adds the specified localized translation to this container.
+     * Adds the specified localized content to this container.
      *
-     * @param xlat the translation to add
-     * @throws NullPointerException if either the translation or its locale are
+     * @param content the localized content to add
+     * @throws NullPointerException if either the content or its locale are
      * {@code null}
-     * @see #getTranslations()
+     * @see #getLocalizedContent()
      */
-    void addTranslation(X xlat);
+    void addLocalizedContent(L content);
 
     /**
-     * Retrieves the mapping of localized translations of this container. The
-     * translations are keyed by locale.
+     * Retrieves the mapping of localized content of this container. The content
+     * is keyed by locale.
      *
      * @return the map (never {@code null})
-     * @see #addTranslation(LocaleProvider)
+     * @see #addLocalizedContent(LocaleProvider)
      */
-    Map<Locale, X> getTranslations();
+    Map<Locale, L> getLocalizedContent();
 
 }

@@ -21,6 +21,7 @@ package org.sacredscripturefoundation.commons.locale.entity;
 
 import org.sacredscripturefoundation.commons.entity.EntityImpl;
 import org.sacredscripturefoundation.commons.locale.LocaleContextHolder;
+import org.sacredscripturefoundation.commons.locale.LocaleProvider;
 
 import java.util.Locale;
 import java.util.Map;
@@ -29,51 +30,52 @@ import java.util.Objects;
 import javax.persistence.MappedSuperclass;
 
 /**
- * This abstract superclass is for any entity whose properties require dynamic
- * localized translations. Typically, translations applies to {@link String}
- * objects but it doesn't have to be the case. A {@link Map} holds the
- * association of {@link Locale} language constants to its translation.
+ * This abstract superclass is a helper template for any entity whose properties
+ * require dynamic localized translations. Typically, translations applies to
+ * {@link String} objects but it doesn't have to be the case. A {@link Map}
+ * holds the association of {@link Locale} language constants to its
+ * translation.
  *
  * @param <ID> the type of primary key
- * @param <X> the type of the translation
+ * @param <L> the type of localized content
  * @author Paul Benedict
- * @see TranslationEntity
+ * @see LocalizedContentEntityTest
  * @since 1.0
  */
 @MappedSuperclass
-public abstract class LocalizableEntity<ID, X extends TranslationEntity<ID>> extends EntityImpl<ID> implements
-        LocalizableContainer<X> {
+public abstract class LocalizableEntity<ID, L extends LocaleProvider> extends EntityImpl<ID> implements
+        LocalizableContainer<L> {
 
-    private static final String MSG_XLAT_NULL = "Translation is required";
-    private static final String MSG_XLAT_LOCALE_NULL = "Translation's locale is required";
+    private static final String MSG_CONTENT_NULL = "Content is required";
+    private static final String MSG_CONTENT_LOCALE_NULL = "Content's locale is required";
     private static final String MSG_USER_LOCALE_NULL = "User locale is required";
 
     @Override
-    public final void addTranslation(X xlat) {
-        Objects.requireNonNull(xlat, MSG_XLAT_NULL);
-        Objects.requireNonNull(xlat.getLocale(), MSG_XLAT_LOCALE_NULL);
-        getTranslations().put(xlat.getLocale(), xlat);
+    public final void addLocalizedContent(L content) {
+        Objects.requireNonNull(content, MSG_CONTENT_NULL);
+        Objects.requireNonNull(content.getLocale(), MSG_CONTENT_LOCALE_NULL);
+        getLocalizedContent().put(content.getLocale(), content);
     }
 
     /**
-     * Determines and retrieves the localized translation based on the user's
-     * current locale. If the translation is absent, the translation of the
-     * fallback locale is attempted. If that translation is absent, {@code null}
-     * is returned.
+     * Determines and retrieves the localized content based on the user's
+     * current locale. If the requested content is absent, the content of the
+     * fallback locale is attempted. If that is absent, {@code null} is
+     * returned.
      *
      * @return the translation or {@code null}
      */
-    protected final X localize(Locale fallbackLocale) {
+    protected final L localize(Locale fallbackLocale) {
         // Try the user's locale
         Locale userLocale = Objects.requireNonNull(LocaleContextHolder.getLocale(), MSG_USER_LOCALE_NULL);
-        X xlat = getTranslations().get(userLocale);
+        L xlat = getLocalizedContent().get(userLocale);
         if (xlat != null) {
             return xlat;
         }
 
         // Try the fallback locale
         if (fallbackLocale != null) {
-            xlat = getTranslations().get(fallbackLocale);
+            xlat = getLocalizedContent().get(fallbackLocale);
             if (xlat != null) {
                 return xlat;
             }
@@ -83,11 +85,11 @@ public abstract class LocalizableEntity<ID, X extends TranslationEntity<ID>> ext
     }
 
     /**
-     * Stores the new localized translations for this localizable entity.
+     * Stores the new localized content for this localizable entity.
      *
-     * @param translations the map of translations
-     * @see #getTranslations()
+     * @param localizedContent the localized content
+     * @see #getLocalizedContent()
      */
-    public abstract void setTranslations(Map<Locale, X> translations);
+    public abstract void setLocalizedContent(Map<Locale, L> localizedContent);
 
 }

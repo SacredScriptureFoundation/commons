@@ -40,41 +40,41 @@ import org.junit.Test;
  */
 public class AbstractLocalizedEntityTest {
 
-    private MockLocalizedEntity entity;
+    private MockLocalizableEntity entity;
 
     @Before
     @SuppressWarnings("serial")
     public void setUp() throws Exception {
-        entity = new MockLocalizedEntity();
+        entity = new MockLocalizableEntity();
     }
 
     /**
-     * Verifies adding a translation.
+     * Verifies adding a localized content.
      */
     @Test
     public void testAddTranslation() {
-        MockTranslation xlat = new MockTranslation(Locale.ENGLISH);
-        entity.addTranslation(xlat);
-        assertEquals(xlat, entity.getTranslations().get(Locale.ENGLISH));
+        MockLocalizedContentEntity content = new MockLocalizedContentEntity(Locale.ENGLISH);
+        entity.addLocalizedContent(content);
+        assertEquals(content, entity.getLocalizedContent().get(Locale.ENGLISH));
     }
 
     /**
-     * Verifies the error to add a {@code null} translation.
+     * Verifies the error to add a {@code null} localized content.
      */
     @Test(expected = NullPointerException.class)
     public void testAddTranslationNull() {
-        entity.addTranslation(null);
+        entity.addLocalizedContent(null);
     }
 
     /**
-     * Verifies the error to add a translation that specifies a {@code null}
-     * locale.
+     * Verifies the error to add a localized content that specifies a
+     * {@code null} locale.
      */
     @Test(expected = NullPointerException.class)
     public void testAddTranslationWithNullLocale() {
-        MockTranslation xlat = new MockTranslation();
-        xlat.setLocale(null);
-        entity.addTranslation(xlat);
+        MockLocalizedContentEntity content = new MockLocalizedContentEntity();
+        content.setLocale(null);
+        entity.addLocalizedContent(content);
     }
 
     /**
@@ -82,10 +82,10 @@ public class AbstractLocalizedEntityTest {
      */
     @Test
     public void testLocalize() {
-        MockTranslation xlat = new MockTranslation(Locale.ENGLISH);
-        entity.addTranslation(xlat);
+        MockLocalizedContentEntity content = new MockLocalizedContentEntity(Locale.ENGLISH);
+        entity.addLocalizedContent(content);
         LocaleContextHolder.setLocale(Locale.ENGLISH);
-        assertSame(xlat, entity.localize(null));
+        assertSame(content, entity.localize(null));
     }
 
     /**
@@ -104,8 +104,8 @@ public class AbstractLocalizedEntityTest {
     @Test
     public void testLocalizeWhenUserLocaleMismatches() {
         LocaleContextHolder.setLocale(Locale.ENGLISH);
-        MockTranslation xlat = new MockTranslation(Locale.FRENCH);
-        entity.addTranslation(xlat);
+        MockLocalizedContentEntity content = new MockLocalizedContentEntity(Locale.FRENCH);
+        entity.addLocalizedContent(content);
         assertNull(entity.localize(null));
     }
 
@@ -116,9 +116,9 @@ public class AbstractLocalizedEntityTest {
     @Test
     public void testLocalizeWhenUserLocaleMismatchesWithFallback() {
         LocaleContextHolder.setLocale(Locale.ENGLISH);
-        MockTranslation xlat = new MockTranslation(Locale.FRENCH);
-        entity.addTranslation(xlat);
-        assertSame(xlat, entity.localize(Locale.FRENCH));
+        MockLocalizedContentEntity content = new MockLocalizedContentEntity(Locale.FRENCH);
+        entity.addLocalizedContent(content);
+        assertSame(content, entity.localize(Locale.FRENCH));
     }
 
     /**
@@ -128,19 +128,19 @@ public class AbstractLocalizedEntityTest {
     @Test
     public void testLocalizeWhenUserLocaleMismatchesWithFallbackFailure() {
         LocaleContextHolder.setLocale(Locale.ENGLISH);
-        MockTranslation xlat = new MockTranslation(Locale.FRENCH);
-        entity.addTranslation(xlat);
+        MockLocalizedContentEntity content = new MockLocalizedContentEntity(Locale.FRENCH);
+        entity.addLocalizedContent(content);
         assertNull(entity.localize(Locale.GERMAN));
     }
 
     /**
-     * Verifies mutating the translations reference.
+     * Verifies mutating the localized contents reference.
      */
     @Test
     public void testSetTranslations() {
-        Map<Locale, MockTranslation> map = new HashMap<>();
-        entity.setTranslations(map);
-        assertSame(map, entity.getTranslations());
+        Map<Locale, MockLocalizedContentEntity> map = new HashMap<>();
+        entity.setLocalizedContent(map);
+        assertSame(map, entity.getLocalizedContent());
     }
 
 }

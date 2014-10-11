@@ -27,8 +27,8 @@ import java.util.Locale;
 import javax.persistence.MappedSuperclass;
 
 /**
- * This abstract class is for any subclasses which represent content translated
- * for a specific locale.
+ * This abstract class is a helper template to support any entity which
+ * represent content translated for a specific locale.
  *
  * @param <ID> the type of primary key
  * @author Paul Benedict
@@ -36,7 +36,7 @@ import javax.persistence.MappedSuperclass;
  * @since 1.0
  */
 @MappedSuperclass
-public abstract class TranslationEntity<ID> extends EntityImpl<ID> implements LocaleProvider {
+public abstract class LocalizedContentEntity<ID> extends EntityImpl<ID> implements LocaleProvider {
 
     private Locale locale;
 
