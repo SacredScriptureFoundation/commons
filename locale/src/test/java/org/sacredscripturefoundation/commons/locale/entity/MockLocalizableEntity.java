@@ -38,7 +38,7 @@ public class MockLocalizableEntity extends LocalizableEntity<Long, MockLocalized
     private Map<Locale, MockLocalizedContentEntity> localizedContent;
 
     @Override
-    public Map<Locale, MockLocalizedContentEntity> getLocalizedContent() {
+    public Map<Locale, MockLocalizedContentEntity> getLocalizedContents() {
         if (localizedContent == null) {
             localizedContent = new HashMap<>();
         }

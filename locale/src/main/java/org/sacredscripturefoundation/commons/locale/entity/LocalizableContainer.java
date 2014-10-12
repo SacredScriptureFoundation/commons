@@ -40,17 +40,28 @@ public interface LocalizableContainer<L extends LocaleProvider> {
      * @param content the localized content to add
      * @throws NullPointerException if either the content or its locale are
      * {@code null}
-     * @see #getLocalizedContent()
+     * @see #getLocalizedContents()
      */
     void addLocalizedContent(L content);
 
     /**
-     * Retrieves the mapping of localized content of this container. The content
-     * is keyed by locale.
+     * Retrieves the mapping of all localized contents managed by this
+     * container. The content is keyed by locale.
      *
      * @return the map (never {@code null})
      * @see #addLocalizedContent(LocaleProvider)
      */
-    Map<Locale, L> getLocalizedContent();
+    Map<Locale, L> getLocalizedContents();
+
+    /**
+     * Determines and retrieves the localized content based on the user's
+     * current locale. If the requested content is absent, the content of the
+     * fallback locale is attempted. If that is absent, {@code null} is
+     * returned.
+     *
+     * @param fallbackLocale the fallback locale
+     * @return the content or {@code null}
+     */
+    L localize(Locale fallbackLocale);
 
 }

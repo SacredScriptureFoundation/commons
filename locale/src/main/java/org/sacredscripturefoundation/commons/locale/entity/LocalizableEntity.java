@@ -54,28 +54,21 @@ public abstract class LocalizableEntity<ID, L extends LocaleProvider> extends En
     public final void addLocalizedContent(L content) {
         Objects.requireNonNull(content, MSG_CONTENT_NULL);
         Objects.requireNonNull(content.getLocale(), MSG_CONTENT_LOCALE_NULL);
-        getLocalizedContent().put(content.getLocale(), content);
+        getLocalizedContents().put(content.getLocale(), content);
     }
 
-    /**
-     * Determines and retrieves the localized content based on the user's
-     * current locale. If the requested content is absent, the content of the
-     * fallback locale is attempted. If that is absent, {@code null} is
-     * returned.
-     *
-     * @return the translation or {@code null}
-     */
-    protected final L localize(Locale fallbackLocale) {
+    @Override
+    public final L localize(Locale fallbackLocale) {
         // Try the user's locale
         Locale userLocale = Objects.requireNonNull(LocaleContextHolder.getLocale(), MSG_USER_LOCALE_NULL);
-        L xlat = getLocalizedContent().get(userLocale);
+        L xlat = getLocalizedContents().get(userLocale);
         if (xlat != null) {
             return xlat;
         }
 
         // Try the fallback locale
         if (fallbackLocale != null) {
-            xlat = getLocalizedContent().get(fallbackLocale);
+            xlat = getLocalizedContents().get(fallbackLocale);
             if (xlat != null) {
                 return xlat;
             }

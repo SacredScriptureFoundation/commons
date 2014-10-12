@@ -53,7 +53,7 @@ public class AbstractLocalizedEntityTest {
     public void testAddTranslation() {
         MockLocalizedContentEntity content = new MockLocalizedContentEntity(Locale.ENGLISH);
         entity.addLocalizedContent(content);
-        assertEquals(content, entity.getLocalizedContent().get(Locale.ENGLISH));
+        assertEquals(content, entity.getLocalizedContents().get(Locale.ENGLISH));
     }
 
     /**
