@@ -84,12 +84,4 @@ public abstract class LocalizableEntity<ID, L extends LocaleProvider> extends En
         return null;
     }
 
-    /**
-     * Stores the new localized content for this localizable entity.
-     *
-     * @param localizedContent the localized content
-     * @see #getLocalizedContent()
-     */
-    public abstract void setLocalizedContent(Map<Locale, L> localizedContent);
-
 }

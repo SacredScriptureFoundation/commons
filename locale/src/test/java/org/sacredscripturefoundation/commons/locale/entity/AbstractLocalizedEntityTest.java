@@ -25,9 +25,7 @@ import static org.junit.Assert.assertSame;
 
 import org.sacredscripturefoundation.commons.locale.LocaleContextHolder;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -131,16 +129,6 @@ public class AbstractLocalizedEntityTest {
         MockLocalizedContentEntity content = new MockLocalizedContentEntity(Locale.FRENCH);
         entity.addLocalizedContent(content);
         assertNull(entity.localize(Locale.GERMAN));
-    }
-
-    /**
-     * Verifies mutating the localized contents reference.
-     */
-    @Test
-    public void testSetTranslations() {
-        Map<Locale, MockLocalizedContentEntity> map = new HashMap<>();
-        entity.setLocalizedContent(map);
-        assertSame(map, entity.getLocalizedContent());
     }
 
 }

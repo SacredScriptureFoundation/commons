@@ -50,11 +50,6 @@ public class MockLocalizableEntity extends LocalizableEntity<Long, MockLocalized
         return name;
     }
 
-    @Override
-    public void setLocalizedContent(Map<Locale, MockLocalizedContentEntity> localizedContent) {
-        this.localizedContent = localizedContent;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
