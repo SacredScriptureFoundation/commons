@@ -31,6 +31,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -51,11 +53,11 @@ public abstract class EntityImpl<ID> extends AbstractModel implements Entity<ID>
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private ID id;
 
-    @Column(name = "created_date", nullable = false, updatable = false)
+    @Column(name = "created", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
-    @Column(name = "updated_date")
+    @Column(name = "updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
 
@@ -128,9 +130,22 @@ public abstract class EntityImpl<ID> extends AbstractModel implements Entity<ID>
         return "id=" + id;
     }
 
+    /**
+     * Updates the audit information for this entity. If there is no created
+     * time, one will be set. The updated time will always be set.
+     *
+     * @see #getCreated()
+     * @see #getUpdated()
+     */
     @Override
+    @PrePersist
+    @PreUpdate
     public void touch() {
-        setUpdated(new Date());
+        Date now = new Date();
+        if (created == null) {
+            setCreated(now);
+        }
+        setUpdated(now);
     }
 
 }
