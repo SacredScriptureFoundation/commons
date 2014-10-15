@@ -24,6 +24,7 @@ import org.sacredscripturefoundation.commons.locale.LocaleProvider;
 
 import java.util.Locale;
 
+import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
 
 /**
@@ -38,6 +39,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class LocalizedContentEntity<ID> extends EntityImpl<ID> implements LocaleProvider {
 
+    @Convert(converter = LocaleLanguageConverter.class)
     private Locale locale;
 
     /**
