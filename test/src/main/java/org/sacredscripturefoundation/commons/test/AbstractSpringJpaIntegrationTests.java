@@ -20,6 +20,7 @@
 package org.sacredscripturefoundation.commons.test;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -52,14 +53,27 @@ public class AbstractSpringJpaIntegrationTests extends AbstractTransactionalJUni
     protected EntityManager em;
 
     /**
-     * Verifies that the specified object is a transient object as defined by
+     * Verifies that the specified object is not a transient entity as defined
+     * by the persistence lifecycle of JPA.
+     *
+     * @param o the object to verify
+     * @throws AssertionError if the object is persisted
+     * @see #assertTransient(Object)
+     */
+    protected final void assertNotTransient(final Object o) {
+        assertTrue("Entity should be persisted but is not", em.contains(o));
+    }
+
+    /**
+     * Verifies that the specified object is a transient entity as defined by
      * the persistence lifecycle of JPA.
      *
      * @param o the object to verify
      * @throws AssertionError if the object is not transient
+     * @see #assertNotTransient(Object)
      */
     protected final void assertTransient(final Object o) {
-        assertFalse(em.contains(o));
+        assertFalse("Entity should be transient but is not", em.contains(o));
     }
 
     /**
