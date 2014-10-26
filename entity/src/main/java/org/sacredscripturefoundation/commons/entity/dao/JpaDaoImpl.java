@@ -110,8 +110,7 @@ public class JpaDaoImpl<T extends Entity<ID>, ID extends Serializable> implement
 
     @Override
     public List<T> getAll() {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        TypedQuery<T> query = em.createQuery(newQuery(builder));
+        TypedQuery<T> query = em.createQuery(newQuery(em.getCriteriaBuilder()));
         return query.getResultList();
     }
 
@@ -146,6 +145,17 @@ public class JpaDaoImpl<T extends Entity<ID>, ID extends Serializable> implement
     }
 
     /**
+     * Creates a new named query for the specified name.
+     *
+     * @param name the name of the query
+     * @return the query instance
+     * @see #newQuery(CriteriaBuilder)
+     */
+    protected TypedQuery<T> newNamedQuery(String name) {
+        return em.createNamedQuery(name, entityClass);
+    }
+
+    /**
      * Creates a new criteria rooted at the configured entity class. Default
      * ordering is automatically applied if provided.
      * <p>
@@ -153,7 +163,7 @@ public class JpaDaoImpl<T extends Entity<ID>, ID extends Serializable> implement
      * customization.
      *
      * @return the criteria
-     * @see #entityClass()
+     * @see #newNamedQuery(String)
      */
     protected CriteriaQuery<T> newQuery(CriteriaBuilder builder) {
         CriteriaQuery<T> crit = builder.createQuery(entityClass);
