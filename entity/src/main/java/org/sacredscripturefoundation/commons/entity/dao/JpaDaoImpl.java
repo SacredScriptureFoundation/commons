@@ -32,6 +32,7 @@ import java.util.Objects;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.LockModeType;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -120,9 +121,14 @@ public class JpaDaoImpl<T extends Entity<ID>, ID extends Serializable> implement
         CriteriaQuery<T> cq = builder.createQuery(entityClass);
         cq.where(builder.equal(cq.from(entityClass).get("naturalId"), id));
 
-        T entity = em.createQuery(cq).getSingleResult();
-        if ((entity == null) && required) {
-            throw new EntityNotFoundException(String.format(MSG_UNKNOWN_ID, entityClass.getName(), id));
+        T entity;
+        try {
+            entity = em.createQuery(cq).getSingleResult();
+        } catch (NoResultException e) {
+            if (required) {
+                throw new EntityNotFoundException(String.format(MSG_UNKNOWN_ID, entityClass.getName(), id));
+            }
+            return null;
         }
         return entity;
     }
