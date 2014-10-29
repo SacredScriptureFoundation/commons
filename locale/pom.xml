@@ -51,6 +51,11 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>ssf-commons-web</artifactId>
     </dependency>
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
 
 </project>
