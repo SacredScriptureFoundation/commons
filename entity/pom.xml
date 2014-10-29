@@ -61,22 +61,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-orm</artifactId>
-      <optional>true</optional>
-    </dependency>
-
-    <!-- Additional test support -->
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>ssf-commons-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-test</artifactId>
-    </dependency>
   </dependencies>
   
 </project>
