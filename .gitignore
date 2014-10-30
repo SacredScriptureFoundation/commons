@@ -8,6 +8,7 @@ target
 bom/target
 core/target
 entity/target
+itest/target
 locale/target
 test/target
 web/target

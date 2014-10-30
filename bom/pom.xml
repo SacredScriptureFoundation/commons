@@ -53,6 +53,12 @@
       </dependency>
       <dependency>
         <groupId>org.sacredscripturefoundation.commons</groupId>
+        <artifactId>ssf-commons-itest</artifactId>
+        <version>${project.version}</version>
+        <scope>test</scope>  
+      </dependency>
+      <dependency>
+        <groupId>org.sacredscripturefoundation.commons</groupId>
         <artifactId>ssf-commons-locale</artifactId>
         <version>${project.version}</version>  
       </dependency>

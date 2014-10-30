@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- 
-  Copyright (c) 2013, 2014 Sacred Scripture Foundation.
+  Copyright (c) 2014 Sacred Scripture Foundation.
   "All scripture is given by inspiration of God, and is profitable for 
   doctrine, for reproof, for correction, for instruction in righteousness:
   That the man of God may be perfect, throughly furnished unto all good 
@@ -28,20 +28,41 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ssf-commons-test</artifactId>
+  <artifactId>ssf-commons-itest</artifactId>
   <packaging>jar</packaging>
 
-  <name>Commons Test</name>
-  <description>Commons Test</description>  
+  <name>Commons Integration Test</name>
+  <description>Commons Integration Test</description>  
 
   <dependencies>
     <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>ssf-commons-core</artifactId>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
       <scope>compile</scope>
     </dependency>
   </dependencies>

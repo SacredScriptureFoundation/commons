@@ -57,6 +57,7 @@
   <modules>
     <module>core</module>
     <module>test</module>
+    <module>itest</module>
     <module>entity</module>
     <module>web</module>
     <module>locale</module>
