@@ -33,6 +33,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -237,7 +238,16 @@ public class JpaDaoImpl<T extends Entity<ID>, ID extends Serializable> implement
         em.remove(entity);
     }
 
-    public final void setEntityManager(EntityManager em) {
+    /**
+     * Stores the entity manager for this data access object. This method is
+     * annotated to be the injection point for the default persitence context.
+     * To inject another persistence context, override and annotate the
+     * overridden method with the intended persistence context.
+     *
+     * @param em the entity manager to set
+     */
+    @PersistenceContext
+    public void setEntityManager(EntityManager em) {
         this.em = em;
     }
 
