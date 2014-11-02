@@ -28,7 +28,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.eclipse.persistence.queries.ScrollableCursor;
+import org.hibernate.ScrollableResults;
 
 /**
  * This class is the implementation for functionality specific to Hibernate.
@@ -41,23 +41,23 @@ public class HibernateVendorHelper<T extends Entity<ID>, ID extends Serializable
 
     @Override
     public Count<List<T>> page(Query query, int beginRow, int endRow) {
-        query.setHint("eclipselink.cursor.scrollable", true);
-        ScrollableCursor cursor = (ScrollableCursor) query.getSingleResult();
+        // Get total result count
+        int total;
+        ScrollableResults scroll = query.unwrap(org.hibernate.Query.class).scroll();
         try {
-            int total = cursor.size();
-            cursor.absolute(beginRow);
-
-            // FIXME Eclipse compiler bug
-            // Should error but doesn't: can't convert List<Object> to List<T>
-            // Does error if moved to another source file! But yet to extract
-            // a test case that reproduces bug
-            // List<T> results = (List<T>) cursor.next(endRow - beginRow + 1);
-            @SuppressWarnings("unchecked")
-            List<T> results = List.class.cast(cursor.next(endRow - beginRow + 1));
-            return new CountImpl<List<T>>(total, results);
+            scroll.last();
+            total = scroll.getRowNumber();
         } finally {
-            cursor.close();
+            scroll.close();
         }
+
+        // Get page of data
+        query.setFirstResult(beginRow);
+        query.setMaxResults(endRow - beginRow + 1);
+
+        @SuppressWarnings("unchecked")
+        List<T> results = query.getResultList();
+        return new CountImpl<List<T>>(total, results);
     }
 
 }
