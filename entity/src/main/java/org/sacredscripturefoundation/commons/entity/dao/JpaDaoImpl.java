@@ -20,7 +20,6 @@
 package org.sacredscripturefoundation.commons.entity.dao;
 
 import org.sacredscripturefoundation.commons.Count;
-import org.sacredscripturefoundation.commons.CountImpl;
 import org.sacredscripturefoundation.commons.entity.Entity;
 import org.sacredscripturefoundation.commons.entity.NaturalOrdering;
 
@@ -44,7 +43,6 @@ import javax.persistence.criteria.Root;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.persistence.queries.ScrollableCursor;
 
 /**
  * This class serves as the Base class for all other Daos - namely to hold
@@ -66,6 +64,7 @@ public class JpaDaoImpl<T extends Entity<ID>, ID extends Serializable> implement
     private final Class<T> entityClass;
     private final NaturalOrdering ordering;
     private EntityManager em;
+    private VendorHelper<T, ID> vendorHelper;
 
     /**
      * Constructs a new JPA DAO implementation. This constructor is solely for
@@ -195,23 +194,7 @@ public class JpaDaoImpl<T extends Entity<ID>, ID extends Serializable> implement
      * @return the list of data plus its total count
      */
     protected final Count<List<T>> page(Query query, int beginRow, int endRow) {
-        query.setHint("eclipselink.cursor.scrollable", true);
-        ScrollableCursor cursor = (ScrollableCursor) query.getSingleResult();
-        try {
-            int total = cursor.size();
-            cursor.absolute(beginRow);
-
-            // FIXME Eclipse compiler bug
-            // Should error but doesn't: can't convert List<Object> to List<T>
-            // Does error if moved to another source file! But yet to extract
-            // a test case that reproduces bug
-            // List<T> results = (List<T>) cursor.next(endRow - beginRow + 1);
-            @SuppressWarnings("unchecked")
-            List<T> results = List.class.cast(cursor.next(endRow - beginRow + 1));
-            return new CountImpl<List<T>>(total, results);
-        } finally {
-            cursor.close();
-        }
+        return vendorHelper.page(query, beginRow, endRow);
     }
 
     @Override
@@ -249,6 +232,15 @@ public class JpaDaoImpl<T extends Entity<ID>, ID extends Serializable> implement
     @PersistenceContext
     public void setEntityManager(EntityManager em) {
         this.em = em;
+    }
+
+    /**
+     * Stores the new vendor helper for this data access object.
+     *
+     * @param vendorHelper the vendor helper to set
+     */
+    public final void setVendorHelper(VendorHelper<T, ID> vendorHelper) {
+        this.vendorHelper = vendorHelper;
     }
 
     @Override
