@@ -55,19 +55,20 @@
       <artifactId>log4j-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-core</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.eclipse.persistence</groupId>
       <artifactId>eclipselink</artifactId>
-      <scope>optional</scope>
+      <optional>true</optional>
       <exclusions>
         <exclusion>
           <groupId>org.eclipse.persistence</groupId>
           <artifactId>javax.persistence</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <optional>true</optional>
     </dependency>
   </dependencies>
   
