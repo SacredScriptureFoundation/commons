@@ -24,7 +24,6 @@ import org.sacredscripturefoundation.commons.locale.LocaleProvider;
 
 import java.util.Locale;
 
-import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
 
 /**
@@ -39,7 +38,12 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class LocalizedContentEntity<ID> extends EntityImpl<ID> implements LocaleProvider {
 
-    @Convert(converter = LocaleLanguageConverter.class)
+    // This causes the dreaded "No type name" error in Hibernate when
+    // combined with @MapKey. Works just fine with Eclipselink.
+    // https://hibernate.atlassian.net/browse/HHH-9475
+    // http://stackoverflow.com/questions/21070592/can-jpa-converter-be-used-in-a-map-mapping-using-mapkey
+    //
+    // @Convert(converter = LocaleLanguageConverter.class)
     private Locale locale;
 
     /**
