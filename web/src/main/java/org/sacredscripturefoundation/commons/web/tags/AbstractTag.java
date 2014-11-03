@@ -27,8 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 /**
  * This class is the base for all custom tags. The goal is for custom tags to be
@@ -44,7 +44,7 @@ public abstract class AbstractTag extends BodyTagSupport {
     /**
      * Instance logger.
      */
-    protected final Logger log = LogManager.getLogger();
+    protected final Logger log = LogManager.getLogger(getClass());
 
     /**
      * Convienence method to print the specified string to the page.

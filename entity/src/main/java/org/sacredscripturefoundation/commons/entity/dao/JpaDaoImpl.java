@@ -41,8 +41,8 @@ import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 /**
  * This class serves as the Base class for all other Daos - namely to hold
@@ -60,7 +60,7 @@ public class JpaDaoImpl<T extends Entity<ID>, ID extends Serializable> implement
     private static final String MSG_NO_GENERICIZED_SUBCLASS = "Constructor requires genericized subclass";
     private static final String MSG_UNKNOWN_ID = "Unknown %s id[%s]";
 
-    protected final Logger log = LogManager.getLogger();
+    protected final Logger log = LogManager.getLogger(JpaDaoImpl.class);
     private final Class<T> entityClass;
     private final NaturalOrdering ordering;
     private EntityManager em;
