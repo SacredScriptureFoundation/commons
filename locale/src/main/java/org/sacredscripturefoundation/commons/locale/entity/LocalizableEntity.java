@@ -50,8 +50,12 @@ public abstract class LocalizableEntity<ID, L extends LocaleProvider> extends En
     private static final String MSG_CONTENT_LOCALE_NULL = "Content's locale is required";
     private static final String MSG_USER_LOCALE_NULL = "User locale is required";
 
+    /**
+     * Subclasses may override this method to amend behavior. One such example
+     * would be setting the backreference, if appropriate, on the content.
+     */
     @Override
-    public final void addLocalizedContent(L content) {
+    public void addLocalizedContent(L content) {
         Objects.requireNonNull(content, MSG_CONTENT_NULL);
         Objects.requireNonNull(content.getLocale(), MSG_CONTENT_LOCALE_NULL);
         getLocalizedContents().put(content.getLocale(), content);
