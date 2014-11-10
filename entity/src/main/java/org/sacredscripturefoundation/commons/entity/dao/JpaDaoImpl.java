@@ -197,6 +197,22 @@ public class JpaDaoImpl<T extends Entity<ID>, ID extends Serializable> implement
         return vendorHelper.page(query, beginRow, endRow);
     }
 
+    /**
+     * Convenience method that executes the specified query for a single result.
+     * When no result, the expected {@code NoResultException} is swallowed and
+     * {@code null} is returned.
+     *
+     * @param query the query to execute
+     * @return the found entity or {@code null}
+     */
+    protected final T queryForSingleResult(TypedQuery<T> query) {
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
     @Override
     public void refresh(T entity) {
         Objects.requireNonNull(entity);
