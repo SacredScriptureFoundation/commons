@@ -22,9 +22,8 @@ package org.sacredscripturefoundation.commons.entity;
 import org.sacredscripturefoundation.commons.BusinessException;
 
 /**
- * The <code>UnknownEntityException</code> class is thrown when the system
- * expects the resource to be present, but it cannot be found by the specified
- * identifier.
+ * This exception is thrown when the system expects the resource to be present,
+ * but it cannot be found by the specified identifier.
  *
  * @author Paul Benedict
  * @since 1.0
@@ -35,9 +34,20 @@ public class UnknownEntityException extends BusinessException {
      * Constructs a new exception.
      *
      * @see #UnknownEntityException()
+     * @see #UnknownEntityException(String)
      */
     public UnknownEntityException() {
         super();
+    }
+
+    /**
+     * Constructs a new exception with the specified message.
+     *
+     * @param message the message
+     * @see #UnknownEntityException()
+     */
+    public UnknownEntityException(String message) {
+        super(message);
     }
 
 }
