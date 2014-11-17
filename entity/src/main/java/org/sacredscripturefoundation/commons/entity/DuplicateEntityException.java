@@ -35,13 +35,32 @@ public class DuplicateEntityException extends BusinessException {
 
     /**
      * Constructs a new exception.
+     *
+     * @see #DuplicateEntityException(Throwable)
+     * @see #DuplicateEntityException(String, Object...)
      */
     public DuplicateEntityException() {
         super();
     }
 
     /**
+     * Constructs a new exception with the specified message template and
+     * arguments.
+     *
+     * @param message the message template
+     * @param args the message arguments
+     * @see #DuplicateEntityException()
+     * @see #DuplicateEntityException(Throwable)
+     */
+    public DuplicateEntityException(String message, Object... args) {
+        super(message, args);
+    }
+
+    /**
      * Constructs a new exception and specifies the root cause.
+     *
+     * @see #DuplicateEntityException()
+     * @see #DuplicateEntityException(String, Object...)
      */
     public DuplicateEntityException(Throwable cause) {
         super(cause);
