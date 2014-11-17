@@ -39,15 +39,36 @@ public abstract class BusinessException extends RuntimeException {
      * Constructs a new business exception with the specified message.
      *
      * @param message the message
+     * @see #BusinessException()
+     * @see #BusinessException(Throwable)
+     * @see #BusinessException(String, Object...)
      */
     public BusinessException(String message) {
         super(message);
     }
 
     /**
+     * Constructs a new exception with the specified message template and
+     * arguments. The message template and arguments should be specified
+     * according to {@link String#format(String, Object...)}.
+     *
+     * @param message the message template
+     * @param args the message arguments
+     * @see #BusinessException()
+     * @see #BusinessException(String)
+     * @see #BusinessException(Throwable)
+     */
+    public BusinessException(String message, Object... args) {
+        super(String.format(message, args));
+    }
+
+    /**
      * Constructs a new business exception with the specified root cause.
      *
      * @param cause the root cause
+     * @see #BusinessException()
+     * @see #BusinessException(String)
+     * @see #BusinessException(String, Object...)
      */
     public BusinessException(Throwable cause) {
         super(cause);

@@ -45,9 +45,23 @@ public class UnknownEntityException extends BusinessException {
      *
      * @param message the message
      * @see #UnknownEntityException()
+     * @see #UnknownEntityException(String, Object...)
      */
     public UnknownEntityException(String message) {
         super(message);
+    }
+
+    /**
+     * Constructs a new exception with the specified message template and
+     * arguments.
+     *
+     * @param message the message template
+     * @param args the message arguments
+     * @see #UnknownEntityException()
+     * @see #UnknownEntityException(String)
+     */
+    public UnknownEntityException(String message, Object... args) {
+        super(message, args);
     }
 
 }
