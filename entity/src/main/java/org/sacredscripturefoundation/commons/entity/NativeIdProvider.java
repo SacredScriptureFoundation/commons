@@ -25,6 +25,8 @@ package org.sacredscripturefoundation.commons.entity;
  * is generally undesirable to expose this to external systems.
  *
  * @param <ID> the native identifier type
+ * @author Paul Benedict
+ * @see PublicIdProvider
  * @since 1.0
  */
 public interface NativeIdProvider<ID> {

@@ -20,22 +20,23 @@
 package org.sacredscripturefoundation.commons.entity;
 
 /**
- * This interface exposes the natural business identifier for an entity. The
+ * This interface exposes the public business identifier for an entity. The
  * identifier is generated when the entity is first persisted and is never
  * dependent upon any data source implementation. The value is suitable for
  * exposing to external systems.
  *
- * @param <ID> the natural identifier type
+ * @param <ID> the public identifier type
  * @author Paul Benedict
+ * @see NativeIdProvider
  * @since 1.0
  */
-public interface NaturalIdProvider<ID> {
+public interface PublicIdProvider<ID> {
 
     /**
-     * Retrieves the natural identifier.
+     * Retrieves the public identifier.
      *
-     * @return the natural identifier
+     * @return the public identifier
      */
-    ID getNaturalId();
+    ID getPublicId();
 
 }
