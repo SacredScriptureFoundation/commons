@@ -42,14 +42,14 @@ import org.junit.Test;
 public class DaoEclipseLinkImplTest {
 
     private MockEntity entity;
-    private JpaDaoImpl<MockEntity, Long> dao;
+    private JpaDaoImpl<MockEntity, MockEntity, Long> dao;
     private EntityManager em;
 
     @Before
     public void setUp() throws Exception {
         entity = new MockEntity(1L);
         em = createNiceMock(EntityManager.class);
-        dao = new JpaDaoImpl<MockEntity, Long>(MockEntity.class);
+        dao = new JpaDaoImpl<MockEntity, MockEntity, Long>(MockEntity.class);
         dao.setEntityManager(em);
     }
 
@@ -58,7 +58,7 @@ public class DaoEclipseLinkImplTest {
      */
     @Test(expected = IllegalStateException.class)
     public void testConstructorWhenSubclassing() {
-        new JpaDaoImpl<MockEntity, Long>();
+        new JpaDaoImpl<MockEntity, MockEntity, Long>();
     }
 
     /**
@@ -68,7 +68,7 @@ public class DaoEclipseLinkImplTest {
      */
     @Test
     public void testConstructorWhenSubclassIsParameterized() {
-        dao = new JpaDaoImpl<MockEntity, Long>() {
+        dao = new JpaDaoImpl<MockEntity, MockEntity, Long>() {
             // do nothing
         };
         assertEquals(MockEntity.class, dao.entityClass());

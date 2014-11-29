@@ -49,19 +49,36 @@ import org.apache.log4j.Logger;
  * common methods that they might all use. Can be used for standard CRUD
  * operations.
  *
- * @param <T> the entity type
+ * @param <T> the entity type interface
+ * @param <U> the entity type implementation registered with JPA
  * @param <ID> the entity identifier type
  * @author Paul Benedict
  * @see NaturalOrdering
  * @since 1.0
  */
-public class JpaDaoImpl<T extends Entity<ID>, ID extends Serializable> implements Dao<T, ID> {
+public class JpaDaoImpl<T extends Entity<ID>, U extends T, ID extends Serializable> implements Dao<T, ID> {
+
+    /**
+     * Convenience method that executes the specified query for a single result.
+     * When no result, the expected {@code NoResultException} is swallowed and
+     * {@code null} is returned.
+     *
+     * @param query the query to execute
+     * @return the found entity or {@code null}
+     */
+    protected static final <X> X singleResultOf(TypedQuery<X> query) {
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 
     private static final String MSG_NO_GENERICIZED_SUBCLASS = "Constructor requires genericized subclass";
     private static final String MSG_UNKNOWN_ID = "Unknown %s id[%s]";
 
     protected final Logger log = LogManager.getLogger(JpaDaoImpl.class);
-    private final Class<T> entityClass;
+    private final Class<U> entityClass;
     private final NaturalOrdering ordering;
     private EntityManager em;
     private VendorHelper<T, ID> vendorHelper;
@@ -74,7 +91,7 @@ public class JpaDaoImpl<T extends Entity<ID>, ID extends Serializable> implement
     @SuppressWarnings("unchecked")
     protected JpaDaoImpl() {
         try {
-            entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+            entityClass = (Class<U>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         } catch (ClassCastException e) {
             throw new IllegalStateException(MSG_NO_GENERICIZED_SUBCLASS, e);
         }
@@ -87,13 +104,13 @@ public class JpaDaoImpl<T extends Entity<ID>, ID extends Serializable> implement
      * @param entityClass the entity type
      * @throws NullPointerException if the type is {@code null}
      */
-    public JpaDaoImpl(Class<T> entityClass) {
+    public JpaDaoImpl(Class<U> entityClass) {
         Objects.requireNonNull(entityClass);
         this.entityClass = entityClass;
         ordering = entityClass.getAnnotation(NaturalOrdering.class);
     }
 
-    protected final Class<T> entityClass() {
+    protected final Class<U> entityClass() {
         return entityClass;
     }
 
@@ -109,28 +126,27 @@ public class JpaDaoImpl<T extends Entity<ID>, ID extends Serializable> implement
         return em.find(entityClass, id, lockMode);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<T> getAll() {
-        TypedQuery<T> query = em.createQuery(newQuery(em.getCriteriaBuilder()));
-        return query.getResultList();
+        TypedQuery<U> query = em.createQuery(newQuery(em.getCriteriaBuilder()));
+        return (List<T>) query.getResultList();
     }
 
     @Override
     public T getByNaturalId(Serializable id, boolean required) {
         CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<T> cq = builder.createQuery(entityClass);
+        CriteriaQuery<U> cq = builder.createQuery(entityClass);
         cq.where(builder.equal(cq.from(entityClass).get("naturalId"), id));
 
-        T entity;
         try {
-            entity = em.createQuery(cq).getSingleResult();
+            return em.createQuery(cq).getSingleResult();
         } catch (NoResultException e) {
             if (required) {
                 throw new EntityNotFoundException(String.format(MSG_UNKNOWN_ID, entityClass.getName(), id));
             }
             return null;
         }
-        return entity;
     }
 
     @Override
@@ -157,7 +173,7 @@ public class JpaDaoImpl<T extends Entity<ID>, ID extends Serializable> implement
      * @return the query instance
      * @see #newQuery(CriteriaBuilder)
      */
-    protected TypedQuery<T> newNamedQuery(String name) {
+    protected TypedQuery<U> newNamedQuery(String name) {
         return em.createNamedQuery(name, entityClass);
     }
 
@@ -171,9 +187,9 @@ public class JpaDaoImpl<T extends Entity<ID>, ID extends Serializable> implement
      * @return the criteria
      * @see #newNamedQuery(String)
      */
-    protected CriteriaQuery<T> newQuery(CriteriaBuilder builder) {
-        CriteriaQuery<T> crit = builder.createQuery(entityClass);
-        Root<T> root = crit.from(entityClass);
+    protected CriteriaQuery<U> newQuery(CriteriaBuilder builder) {
+        CriteriaQuery<U> crit = builder.createQuery(entityClass);
+        Root<U> root = crit.from(entityClass);
         if (ordering != null) {
             Path<Object> propPath = root.get(ordering.property());
             Order order = ordering.ascending() ? builder.asc(propPath) : builder.desc(propPath);
@@ -195,22 +211,6 @@ public class JpaDaoImpl<T extends Entity<ID>, ID extends Serializable> implement
      */
     protected final Count<List<T>> page(Query query, int beginRow, int endRow) {
         return vendorHelper.page(query, beginRow, endRow);
-    }
-
-    /**
-     * Convenience method that executes the specified query for a single result.
-     * When no result, the expected {@code NoResultException} is swallowed and
-     * {@code null} is returned.
-     *
-     * @param query the query to execute
-     * @return the found entity or {@code null}
-     */
-    protected final T queryForSingleResult(TypedQuery<T> query) {
-        try {
-            return query.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
     }
 
     @Override
