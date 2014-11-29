@@ -39,7 +39,7 @@ import org.junit.Test;
  * @author Paul Benedict
  * @since 1.0
  */
-public class DaoEclipseLinkImplTest {
+public class JpaDaoImplTest {
 
     private MockEntity entity;
     private JpaDaoImpl<MockEntity, MockEntity, Long> dao;
