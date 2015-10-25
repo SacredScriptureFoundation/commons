@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Sacred Scripture Foundation.
+ * Copyright (c) 2014, 2015 Sacred Scripture Foundation.
  * "All scripture is given by inspiration of God, and is profitable for
  * doctrine, for reproof, for correction, for instruction in righteousness:
  * That the man of God may be perfect, throughly furnished unto all good
@@ -54,14 +54,15 @@ public interface LocalizableContainer<L extends LocaleProvider> {
     Map<Locale, L> getLocalizedContents();
 
     /**
-     * Determines and retrieves the localized content based on the user's
-     * current locale. If the requested content is absent, the content of the
-     * fallback locale is attempted. If that is absent, {@code null} is
-     * returned.
+     * Determines and retrieves the localized content based on the specified
+     * locale. If the requested content is absent, the content of the fallback
+     * locale is attempted. If that is also absent, {@code null} is returned.
      *
-     * @param fallbackLocale the fallback locale
+     * @param locale the primary locale
+     * @param fallbackLocale the fallback locale (can be {@code null})
      * @return the content or {@code null}
+     * @throws NullPointerException if {@code locale} is {@code null}
      */
-    L localize(Locale fallbackLocale);
+    L localize(Locale locale, Locale fallbackLocale);
 
 }

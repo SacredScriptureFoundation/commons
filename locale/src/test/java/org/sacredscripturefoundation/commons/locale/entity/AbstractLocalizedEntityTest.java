@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2014 Sacred Scripture Foundation.
+ * Copyright (c) 2013, 2015 Sacred Scripture Foundation.
  * "All scripture is given by inspiration of God, and is profitable for
  * doctrine, for reproof, for correction, for instruction in righteousness:
  * That the man of God may be perfect, throughly furnished unto all good
@@ -22,8 +22,6 @@ package org.sacredscripturefoundation.commons.locale.entity;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
-
-import org.sacredscripturefoundation.commons.locale.LocaleContextHolder;
 
 import java.util.Locale;
 
@@ -76,59 +74,52 @@ public class AbstractLocalizedEntityTest {
     }
 
     /**
-     * Verifies localizing when a locale matches the user's locale.
+     * Verifies localizing when primary locale matches.
      */
     @Test
     public void testLocalize() {
         MockLocalizedContentEntity content = new MockLocalizedContentEntity(Locale.ENGLISH);
         entity.addLocalizedContent(content);
-        LocaleContextHolder.setLocale(Locale.ENGLISH);
-        assertSame(content, entity.localize(null));
+        assertSame(content, entity.localize(Locale.ENGLISH, null));
     }
 
     /**
-     * Verifies the error to localize when the user's locale is absent.
+     * Verifies the error to localize when the primary locale is {@code null}.
      */
     @Test(expected = NullPointerException.class)
-    public void testLocalizeWhenUserLocaleIsNull() {
-        LocaleContextHolder.setLocale(null);
-        assertNull(entity.localize(null));
+    public void testLocalizeWhenLocaleIsNull() {
+        assertNull(entity.localize(null, null));
     }
 
     /**
-     * Verifies the failure to localize when no locale matches the user's
-     * locale.
+     * Verifies the failure to localize when primary locale doesn't match.
      */
     @Test
-    public void testLocalizeWhenUserLocaleMismatches() {
-        LocaleContextHolder.setLocale(Locale.ENGLISH);
+    public void testLocalizeWhenLocaleMismatches() {
         MockLocalizedContentEntity content = new MockLocalizedContentEntity(Locale.FRENCH);
         entity.addLocalizedContent(content);
-        assertNull(entity.localize(null));
+        assertNull(entity.localize(Locale.ENGLISH, null));
     }
 
     /**
-     * Verifies localizing using the entity's fallback locale when the user's
-     * locale is not found.
+     * Verifies using the fallback locale when primary locale doesn't match.
      */
     @Test
-    public void testLocalizeWhenUserLocaleMismatchesWithFallback() {
-        LocaleContextHolder.setLocale(Locale.ENGLISH);
+    public void testLocalizeWhenLocaleMismatchesWithFallback() {
         MockLocalizedContentEntity content = new MockLocalizedContentEntity(Locale.FRENCH);
         entity.addLocalizedContent(content);
-        assertSame(content, entity.localize(Locale.FRENCH));
+        assertSame(content, entity.localize(Locale.ENGLISH, Locale.FRENCH));
     }
 
     /**
-     * Verifies the failure to localize when neither the user's locale nor the
-     * entity's fallback locale matches.
+     * Verifies the failure to localize neither primary nor fallback locale
+     * match.
      */
     @Test
-    public void testLocalizeWhenUserLocaleMismatchesWithFallbackFailure() {
-        LocaleContextHolder.setLocale(Locale.ENGLISH);
+    public void testLocalizeWhenLocaleMismatchesWithFallbackFailure() {
         MockLocalizedContentEntity content = new MockLocalizedContentEntity(Locale.FRENCH);
         entity.addLocalizedContent(content);
-        assertNull(entity.localize(Locale.GERMAN));
+        assertNull(entity.localize(Locale.ENGLISH, Locale.GERMAN));
     }
 
 }

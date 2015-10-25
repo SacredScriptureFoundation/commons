@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2014 Sacred Scripture Foundation.
+ * Copyright (c) 2013, 2015 Sacred Scripture Foundation.
  * "All scripture is given by inspiration of God, and is profitable for
  * doctrine, for reproof, for correction, for instruction in righteousness:
  * That the man of God may be perfect, throughly furnished unto all good
@@ -20,7 +20,6 @@
 package org.sacredscripturefoundation.commons.locale.entity;
 
 import org.sacredscripturefoundation.commons.entity.EntityImpl;
-import org.sacredscripturefoundation.commons.locale.LocaleContextHolder;
 import org.sacredscripturefoundation.commons.locale.LocaleProvider;
 
 import java.util.Locale;
@@ -48,7 +47,7 @@ public abstract class LocalizableEntity<ID, L extends LocaleProvider> extends En
 
     private static final String MSG_CONTENT_NULL = "Content is required";
     private static final String MSG_CONTENT_LOCALE_NULL = "Content's locale is required";
-    private static final String MSG_USER_LOCALE_NULL = "User locale is required";
+    private static final String MSG_LOCALE_NULL = "Locale is required";
 
     /**
      * Subclasses may override this method to amend behavior. One such example
@@ -62,15 +61,15 @@ public abstract class LocalizableEntity<ID, L extends LocaleProvider> extends En
     }
 
     @Override
-    public final L localize(Locale fallbackLocale) {
-        // Try the user's locale
-        Locale userLocale = Objects.requireNonNull(LocaleContextHolder.getLocale(), MSG_USER_LOCALE_NULL);
-        L xlat = getLocalizedContents().get(userLocale);
+    public final L localize(Locale locale, Locale fallbackLocale) {
+        // Try the primary locale
+        L xlat = getLocalizedContents().get(Objects.requireNonNull(locale, MSG_LOCALE_NULL));
         if (xlat != null) {
             return xlat;
         }
 
         // Try the fallback locale
+        // TODO if equal to primary, skip lookup to optimize?
         if (fallbackLocale != null) {
             xlat = getLocalizedContents().get(fallbackLocale);
             if (xlat != null) {
