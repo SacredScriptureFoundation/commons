@@ -86,4 +86,9 @@ public abstract class LocalizableEntity<ID, L extends LocaleProvider> extends En
         return null;
     }
 
+    @Override
+    public boolean supportsLocale(Locale locale) {
+        return getLocalizedContents().containsKey(locale);
+    }
+
 }

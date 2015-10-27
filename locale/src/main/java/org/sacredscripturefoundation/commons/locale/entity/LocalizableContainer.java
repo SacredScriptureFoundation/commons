@@ -51,6 +51,7 @@ public interface LocalizableContainer<L extends LocaleProvider> {
      *
      * @return the map (never {@code null})
      * @see #addLocalizedContent(LocaleProvider)
+     * @see #supportsLocale(Locale)
      */
     Map<Locale, L> getLocalizedContents();
 
@@ -58,6 +59,7 @@ public interface LocalizableContainer<L extends LocaleProvider> {
      * Retrieves the set of locales managed by this container.
      *
      * @return the set of locales (never {@code null}
+     * @see #supportsLocale(Locale)
      */
     Set<Locale> locales();
 
@@ -72,5 +74,15 @@ public interface LocalizableContainer<L extends LocaleProvider> {
      * @throws NullPointerException if {@code locale} is {@code null}
      */
     L localize(Locale locale, Locale fallbackLocale);
+
+    /**
+     * Determines if this container has localized content for the specified
+     * locale.
+     *
+     * @param locale the locale to find
+     * @return {@code true} if supports; otherwise {@code false}
+     * @see #locales()
+     */
+    boolean supportsLocale(Locale locale);
 
 }
