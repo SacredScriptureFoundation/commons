@@ -25,6 +25,7 @@ import org.sacredscripturefoundation.commons.locale.LocaleProvider;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.MappedSuperclass;
 
@@ -42,8 +43,8 @@ import javax.persistence.MappedSuperclass;
  * @since 1.0
  */
 @MappedSuperclass
-public abstract class LocalizableEntity<ID, L extends LocaleProvider> extends EntityImpl<ID> implements
-        LocalizableContainer<L> {
+public abstract class LocalizableEntity<ID, L extends LocaleProvider> extends EntityImpl<ID>
+        implements LocalizableContainer<L> {
 
     private static final String MSG_CONTENT_NULL = "Content is required";
     private static final String MSG_CONTENT_LOCALE_NULL = "Content's locale is required";
@@ -58,6 +59,11 @@ public abstract class LocalizableEntity<ID, L extends LocaleProvider> extends En
         Objects.requireNonNull(content, MSG_CONTENT_NULL);
         Objects.requireNonNull(content.getLocale(), MSG_CONTENT_LOCALE_NULL);
         getLocalizedContents().put(content.getLocale(), content);
+    }
+
+    @Override
+    public Set<Locale> locales() {
+        return getLocalizedContents().keySet();
     }
 
     @Override

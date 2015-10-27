@@ -23,6 +23,7 @@ import org.sacredscripturefoundation.commons.locale.LocaleProvider;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * This interface defines a container that manages translated content for
@@ -52,6 +53,13 @@ public interface LocalizableContainer<L extends LocaleProvider> {
      * @see #addLocalizedContent(LocaleProvider)
      */
     Map<Locale, L> getLocalizedContents();
+
+    /**
+     * Retrieves the set of locales managed by this container.
+     *
+     * @return the set of locales (never {@code null}
+     */
+    Set<Locale> locales();
 
     /**
      * Determines and retrieves the localized content based on the specified
