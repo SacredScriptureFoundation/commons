@@ -64,16 +64,13 @@ public interface LocalizableContainer<L extends LocaleProvider> {
     Set<Locale> locales();
 
     /**
-     * Determines and retrieves the localized content based on the specified
-     * locale. If the requested content is absent, the content of the fallback
-     * locale is attempted. If that is also absent, {@code null} is returned.
+     * Retrieves the localized content based on the specified locale.
      *
-     * @param locale the primary locale
-     * @param fallbackLocale the fallback locale (can be {@code null})
+     * @param locale the locale
      * @return the content or {@code null}
      * @throws NullPointerException if {@code locale} is {@code null}
      */
-    L localize(Locale locale, Locale fallbackLocale);
+    L localize(Locale locale);
 
     /**
      * Determines if this container has localized content for the specified

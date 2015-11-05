@@ -80,46 +80,25 @@ public class AbstractLocalizedEntityTest {
     public void testLocalize() {
         MockLocalizedContentEntity content = new MockLocalizedContentEntity(Locale.ENGLISH);
         entity.addLocalizedContent(content);
-        assertSame(content, entity.localize(Locale.ENGLISH, null));
+        assertSame(content, entity.localize(Locale.ENGLISH));
     }
 
     /**
-     * Verifies the error to localize when the primary locale is {@code null}.
+     * Verifies the failure to localize when locale doesn't match.
+     */
+    @Test
+    public void testLocalizeMismatch() {
+        MockLocalizedContentEntity content = new MockLocalizedContentEntity(Locale.FRENCH);
+        entity.addLocalizedContent(content);
+        assertNull(entity.localize(Locale.ENGLISH));
+    }
+
+    /**
+     * Verifies the error to localize when the locale is {@code null}.
      */
     @Test(expected = NullPointerException.class)
     public void testLocalizeWhenLocaleIsNull() {
-        assertNull(entity.localize(null, null));
-    }
-
-    /**
-     * Verifies the failure to localize when primary locale doesn't match.
-     */
-    @Test
-    public void testLocalizeWhenLocaleMismatches() {
-        MockLocalizedContentEntity content = new MockLocalizedContentEntity(Locale.FRENCH);
-        entity.addLocalizedContent(content);
-        assertNull(entity.localize(Locale.ENGLISH, null));
-    }
-
-    /**
-     * Verifies using the fallback locale when primary locale doesn't match.
-     */
-    @Test
-    public void testLocalizeWhenLocaleMismatchesWithFallback() {
-        MockLocalizedContentEntity content = new MockLocalizedContentEntity(Locale.FRENCH);
-        entity.addLocalizedContent(content);
-        assertSame(content, entity.localize(Locale.ENGLISH, Locale.FRENCH));
-    }
-
-    /**
-     * Verifies the failure to localize neither primary nor fallback locale
-     * match.
-     */
-    @Test
-    public void testLocalizeWhenLocaleMismatchesWithFallbackFailure() {
-        MockLocalizedContentEntity content = new MockLocalizedContentEntity(Locale.FRENCH);
-        entity.addLocalizedContent(content);
-        assertNull(entity.localize(Locale.ENGLISH, Locale.GERMAN));
+        entity.localize(null);
     }
 
 }

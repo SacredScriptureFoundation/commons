@@ -43,8 +43,7 @@ import javax.persistence.MappedSuperclass;
  * @since 1.0
  */
 @MappedSuperclass
-public abstract class LocalizableEntity<ID, L extends LocaleProvider> extends EntityImpl<ID>
-        implements LocalizableContainer<L> {
+public abstract class LocalizableEntity<ID, L extends LocaleProvider> extends EntityImpl<ID> implements LocalizableContainer<L> {
 
     private static final String MSG_CONTENT_NULL = "Content is required";
     private static final String MSG_CONTENT_LOCALE_NULL = "Content's locale is required";
@@ -67,23 +66,8 @@ public abstract class LocalizableEntity<ID, L extends LocaleProvider> extends En
     }
 
     @Override
-    public final L localize(Locale locale, Locale fallbackLocale) {
-        // Try the primary locale
-        L xlat = getLocalizedContents().get(Objects.requireNonNull(locale, MSG_LOCALE_NULL));
-        if (xlat != null) {
-            return xlat;
-        }
-
-        // Try the fallback locale
-        // TODO if equal to primary, skip lookup to optimize?
-        if (fallbackLocale != null) {
-            xlat = getLocalizedContents().get(fallbackLocale);
-            if (xlat != null) {
-                return xlat;
-            }
-        }
-
-        return null;
+    public final L localize(Locale locale) {
+        return getLocalizedContents().get(Objects.requireNonNull(locale, MSG_LOCALE_NULL));
     }
 
     @Override
