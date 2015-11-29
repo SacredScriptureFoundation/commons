@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2014 Sacred Scripture Foundation.
+ * Copyright (c) 2013, 2015 Sacred Scripture Foundation.
  * "All scripture is given by inspiration of God, and is profitable for
  * doctrine, for reproof, for correction, for instruction in righteousness:
  * That the man of God may be perfect, throughly furnished unto all good
@@ -58,6 +58,9 @@ import org.apache.log4j.Logger;
  */
 public class JpaDaoImpl<T extends Entity<ID>, U extends T, ID extends Serializable> implements Dao<T, ID> {
 
+    private static final String MSG_NO_GENERICIZED_SUBCLASS = "Constructor requires genericized subclass";
+    private static final String MSG_UNKNOWN_ID = "Unknown %s id[%s]";
+
     /**
      * Convenience method that executes the specified query for a single result.
      * When no result, the expected {@code NoResultException} is swallowed and
@@ -73,9 +76,6 @@ public class JpaDaoImpl<T extends Entity<ID>, U extends T, ID extends Serializab
             return null;
         }
     }
-
-    private static final String MSG_NO_GENERICIZED_SUBCLASS = "Constructor requires genericized subclass";
-    private static final String MSG_UNKNOWN_ID = "Unknown %s id[%s]";
 
     protected final Logger log = LogManager.getLogger(JpaDaoImpl.class);
     private final Class<U> entityClass;
