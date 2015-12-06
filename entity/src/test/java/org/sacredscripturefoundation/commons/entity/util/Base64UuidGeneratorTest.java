@@ -60,4 +60,15 @@ public class Base64UuidGeneratorTest {
         assertEquals("G8DiqRwNPdiTXgAAZixJuQ", id);
     }
 
+    /**
+     * Verifies the web-safe encoding substitution.
+     */
+    @Test
+    public void testGenerateWebSafe() throws Exception {
+        // Actually "+/pkUOXFSPKFqKFQZnBUeg"
+        gen = new Base64UuidGenerator(true);
+        String id = gen.generate0(UUID.fromString("fbfa6450-e5c5-48f2-85a8-a1506670547a"));
+        assertEquals("-_pkUOXFSPKFqKFQZnBUeg", id);
+    }
+
 }
