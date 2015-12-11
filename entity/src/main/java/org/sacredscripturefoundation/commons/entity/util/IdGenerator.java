@@ -25,13 +25,13 @@ package org.sacredscripturefoundation.commons.entity.util;
  * @author Paul Benedict
  * @since 1.0
  */
-public interface IdGenerator {
+public interface IdGenerator<T> {
 
     /**
      * Generates an identifier.
      *
      * @return the identifier
      */
-    Object generate();
+    T generate();
 
 }

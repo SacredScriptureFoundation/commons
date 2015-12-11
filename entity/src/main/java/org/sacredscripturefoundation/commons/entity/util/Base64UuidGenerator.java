@@ -41,7 +41,7 @@ import java.util.UUID;
  * @see UUID
  */
 @SuppressWarnings("restriction")
-public class Base64UuidGenerator implements IdGenerator {
+public class Base64UuidGenerator implements IdGenerator<String> {
 
     private final sun.misc.BASE64Encoder encoder;
     private final boolean webSafe;
@@ -89,7 +89,7 @@ public class Base64UuidGenerator implements IdGenerator {
      * @see #generate0(UUID)
      */
     @Override
-    public Object generate() {
+    public String generate() {
         return generate0(UUID.randomUUID());
     }
 
