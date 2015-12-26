@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -59,7 +58,6 @@ import org.apache.log4j.Logger;
 public class JpaDaoImpl<T extends Entity<ID>, U extends T, ID extends Serializable> implements Dao<T, ID> {
 
     private static final String MSG_NO_GENERICIZED_SUBCLASS = "Constructor requires genericized subclass";
-    private static final String MSG_UNKNOWN_ID = "Unknown %s id[%s]";
 
     /**
      * Convenience method that executes the specified query for a single result.
@@ -134,19 +132,8 @@ public class JpaDaoImpl<T extends Entity<ID>, U extends T, ID extends Serializab
     }
 
     @Override
-    public T getByNaturalId(Serializable id, boolean required) {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<U> cq = builder.createQuery(entityClass);
-        cq.where(builder.equal(cq.from(entityClass).get("naturalId"), id));
-
-        try {
-            return em.createQuery(cq).getSingleResult();
-        } catch (NoResultException e) {
-            if (required) {
-                throw new EntityNotFoundException(String.format(MSG_UNKNOWN_ID, entityClass.getName(), id));
-            }
-            return null;
-        }
+    public T getByNaturalId(Serializable naturalId) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2014 Sacred Scripture Foundation.
+ * Copyright (c) 2013, 2015 Sacred Scripture Foundation.
  * "All scripture is given by inspiration of God, and is profitable for
  * doctrine, for reproof, for correction, for instruction in righteousness:
  * That the man of God may be perfect, throughly furnished unto all good
@@ -29,13 +29,12 @@ import java.util.List;
  * <p>
  * Design references:
  * <ul>
- * <li><a
- * href="https://developer.jboss.org/wiki/GenericDataAccessObjects">Generic Data
- * Access Objects</a></li>
+ * <li><a href="https://developer.jboss.org/wiki/GenericDataAccessObjects">
+ * Generic Data Access Objects</a></li>
  * <li><a href="http://dhptech.com/article/2006/10/06/java-1.5-generic-dao">Java
  * 1.5 Generic DAO</a> by Dana H. P'Simer, 2006-10-06</li>
- * <li><a
- * href="http://www.ibm.com/developerworks/java/library/j-genericdao.html">Don't
+ * <li><a href=
+ * "http://www.ibm.com/developerworks/java/library/j-genericdao.html">Don't
  * repeat the DAO!"</a> by Per Mellqvist, 2006-05-12</li>
  * </ul>
  *
@@ -52,10 +51,9 @@ public interface Dao<T extends Entity<ID>, ID extends Serializable> {
     void flush();
 
     /**
-     * Retrieves the persistent instance of the given entity class with the
-     * given identifier, or {@code null} if not found.
+     * Retrieves the entity represented by the specified identifier.
      *
-     * @param id the identifier of the entity
+     * @param id the identifier
      * @return the entity if found; otherwise {@code null}
      * @throws NullPointerException if identifier is {@code null}
      * @see #getAll()
@@ -71,7 +69,23 @@ public interface Dao<T extends Entity<ID>, ID extends Serializable> {
      */
     List<T> getAll();
 
-    T getByNaturalId(Serializable id, boolean required);
+    /**
+     * Retrieves the entity represented by the specified natural identifier. The
+     * so-called "natural identifier" is an alternate unique value that has
+     * business meaning in the real world. Not every entity class has a natural
+     * identifier.
+     * <p>
+     * As of JPA 2.1, there is no native concept of a natural identifier. The
+     * default implementation throws {@link UnsupportedOperationException}.
+     * Vendors may have a proprietary extension; subclasses are free to override
+     * this method to use them or execute a custom query.
+     *
+     * @param naturalId the natural identifier
+     * @return the entity if found; otherwise {@code null}
+     * @throws NullPointerException if identifier is {@code null}
+     * @throws UnsupportedOperationException if entity has no natural identifier
+     */
+    T getByNaturalId(Serializable naturalId);
 
     /**
      * Inserts the specified entity. Updates will fail.
@@ -93,7 +107,7 @@ public interface Dao<T extends Entity<ID>, ID extends Serializable> {
      * Implementations must guarantee the check is against the latest snapshot
      * of the repository. The check may not cause any persistence context to
      * flush. The check must support transient entities, persisted entities, and
-     * detatched entities.
+     * detached entities.
      * <p>
      * The default implementation returns {@code false}.
      *
