@@ -46,6 +46,13 @@ import java.util.List;
 public interface Dao<T extends Entity<ID>, ID extends Serializable> {
 
     /**
+     * Retrieves the count of all entities stored in this repository.
+     *
+     * @return the count
+     */
+    long count();
+
+    /**
      * Forces any cached operations to be written to the repository.
      */
     void flush();

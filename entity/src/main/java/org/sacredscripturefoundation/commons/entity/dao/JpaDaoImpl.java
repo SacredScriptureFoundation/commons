@@ -108,6 +108,14 @@ public class JpaDaoImpl<T extends Entity<ID>, U extends T, ID extends Serializab
         ordering = entityClass.getAnnotation(NaturalOrdering.class);
     }
 
+    @Override
+    public long count() {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        cq.select(cb.count(cq.from(entityClass())));
+        return em.createQuery(cq).getSingleResult();
+    }
+
     protected final Class<U> entityClass() {
         return entityClass;
     }
